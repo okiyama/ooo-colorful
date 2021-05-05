@@ -1,6 +1,6 @@
 function Board() {
-	var numHorizontalCells = 20;
-	var numVerticalCells = 20;
+	var numHorizontalCells = 30;
+	var numVerticalCells = 30;
 
 	//var initialTiles = initializeTiles(numHorizontalCells, numVerticalCells);
 
@@ -9,33 +9,36 @@ function Board() {
 		state: "MIXING", //or "SOLVING"
 		moves: [], //[row, column, direction]
 		moveCount: 0,
-		moveCountBeforeSolve: numVerticalCells * numHorizontalCells,
 		lastMove: [],
 		didInitialDraw: false,
+		speedMultiplier: 1,
+		moveCountBeforeSolve: (numVerticalCells * numHorizontalCells),
 		
 		update: function() {
-			if(this.moveCount > this.moveCountBeforeSolve) {
-				this.state = "SOLVING";
-			}
-
-			if(this.state === "MIXING") {
-				if(getRandomInt(0,1) === 0) {
-					//row
-					var rowNum = getRandomInt(0, numVerticalCells - 1);
-					var direction = getRandomInt(0, 1) === 0 ? "LEFT" : "RIGHT";
-					this.updateBoard("ROW", rowNum, direction);
-				} else {
-					//column
-					var colNum = getRandomInt(0, numVerticalCells - 1);
-					var direction = getRandomInt(0, 1) === 0 ? "UP" : "DOWN";
-					this.updateBoard("COLUMN", colNum, direction);
+			for(var i = 0; i < this.speedMultiplier; i++) {
+				if(this.moveCount > this.moveCountBeforeSolve) {
+					this.state = "SOLVING";
 				}
-			} else {
-				if(this.moves.length === 0) {
-					this.moveCount = 0;
-					this.state = "MIXING";
+
+				if(this.state === "MIXING") {
+					if(getRandomInt(0,1) === 0) {
+						//row
+						var rowNum = getRandomInt(0, numVerticalCells - 1);
+						var direction = getRandomInt(0, 1) === 0 ? "LEFT" : "RIGHT";
+						this.updateBoard("ROW", rowNum, direction);
+					} else {
+						//column
+						var colNum = getRandomInt(0, numVerticalCells - 1);
+						var direction = getRandomInt(0, 1) === 0 ? "UP" : "DOWN";
+						this.updateBoard("COLUMN", colNum, direction);
+					}
 				} else {
-					this.solve();	
+					if(this.moves.length === 0) {
+						this.moveCount = 0;
+						this.state = "MIXING";
+					} else {
+						this.solve();	
+					}
 				}
 			}
 		},
@@ -43,7 +46,6 @@ function Board() {
 		solve: function() {
 			var move = this.moves.pop();
 			if(move) {
-				console.info(move);
 				this.updateBoard(move[0], move[1], this.getOppositeDirection(move[2]), true);	
 			}
 		},
