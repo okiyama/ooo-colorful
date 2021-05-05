@@ -1,11 +1,13 @@
 var gameController;
 
-var canvasWidth = 100;
-var canvasHeight = 100;
+var canvasWidth = 900;
+var canvasHeight = 900;
 
 function setup() {
+	document.documentElement.style.overflow = 'hidden';  // firefox, chrome
+	document.body.scroll = "no"; // ie only
   // frameRate(600);
-  createCanvas(canvasWidth, canvasHeight);
+  createCanvas(windowWidth, windowHeight);
   colorMode(HSB, 360, 100, 100, 1);
   gameController = new GameController();
 }

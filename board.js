@@ -1,6 +1,6 @@
 function Board() {
-	var numHorizontalCells = 100;
-	var numVerticalCells = 100;
+	var numHorizontalCells = 20;
+	var numVerticalCells = 20;
 
 	//var initialTiles = initializeTiles(numHorizontalCells, numVerticalCells);
 
@@ -146,7 +146,7 @@ function Board() {
 					rect(i * (width / numHorizontalCells), j * (height / numVerticalCells), width / numHorizontalCells, height / numVerticalCells);
 				}
 			}
-			
+
 			this.didInitialDraw = true;
 		}
 	};
