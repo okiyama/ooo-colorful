@@ -12,7 +12,7 @@ function Board() {
 		lastMove: [],
 		didInitialDraw: false,
 		speedMultiplier: 1,
-		moveCountBeforeSolve: (numVerticalCells * numHorizontalCells),
+		moveCountBeforeSolve: (numVerticalCells * numHorizontalCells) / 2,
 		
 		update: function() {
 			for(var i = 0; i < this.speedMultiplier; i++) {
