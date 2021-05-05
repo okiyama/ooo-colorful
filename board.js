@@ -10,6 +10,8 @@ function Board() {
 		moves: [], //[row, column, direction]
 		moveCount: 0,
 		moveCountBeforeSolve: numVerticalCells * numHorizontalCells,
+		lastMove: [],
+		didInitialDraw: false,
 		
 		update: function() {
 			if(this.moveCount > this.moveCountBeforeSolve) {
@@ -63,6 +65,7 @@ function Board() {
 			if(!solving) {
 				this.moves.push([rowOrCol, rowOrColNum, direction]);
 			}
+			this.lastMove = [rowOrCol, rowOrColNum, direction];
 			this.moveCount++;
 
 			if(rowOrCol === "ROW") {
@@ -110,6 +113,32 @@ function Board() {
 
 
 		draw: function() {
+			if(!this.didInitialDraw) {
+				this.initialDraw();
+			} else {
+				var rowOrCol = this.lastMove[0];
+				var rowOrColNum = this.lastMove[1];
+				if(rowOrCol === "ROW") {
+					noStroke();
+					fill(color(255,255,255));
+					rect(0, rowOrColNum * (height / numVerticalCells), width, height / numVerticalCells);
+					for(var i = 0; i < this.tiles[rowOrColNum].length; i++) {
+						fill(this.tiles[i][rowOrColNum]);
+						rect(i * (width / numHorizontalCells), rowOrColNum * (height / numVerticalCells), width / numHorizontalCells, height / numVerticalCells);
+					}
+				} else {
+					noStroke();
+					fill(color(255,255,255));
+					rect(rowOrColNum * (width / numHorizontalCells), 0, width / numHorizontalCells, height);
+					for(var i = 0; i < this.tiles.length; i++) {
+						fill(this.tiles[rowOrColNum][i]);
+						rect(rowOrColNum * (width / numHorizontalCells), i * (height / numVerticalCells), width / numHorizontalCells, height / numVerticalCells);
+					}
+				}
+			}
+		},
+
+		initialDraw: function() {
 			for(var i = 0; i < this.tiles.length; i++) {
 				for(var j = 0; j < this.tiles[i].length; j++) {
 					noStroke();
@@ -117,6 +146,8 @@ function Board() {
 					rect(i * (width / numHorizontalCells), j * (height / numVerticalCells), width / numHorizontalCells, height / numVerticalCells);
 				}
 			}
+			
+			this.didInitialDraw = true;
 		}
 	};
 

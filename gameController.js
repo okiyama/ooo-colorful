@@ -14,7 +14,6 @@ function GameController() {
 		},
 
 		draw: function() {
-			clear();
 			this.board.draw();
 		},
 

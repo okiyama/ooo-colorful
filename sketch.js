@@ -1,10 +1,10 @@
 var gameController;
 
-var canvasWidth = 900;
-var canvasHeight = 900;
+var canvasWidth = 100;
+var canvasHeight = 100;
 
 function setup() {
-  // frameRate(60);
+  // frameRate(600);
   createCanvas(canvasWidth, canvasHeight);
   colorMode(HSB, 360, 100, 100, 1);
   gameController = new GameController();
